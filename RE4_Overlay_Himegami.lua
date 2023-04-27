@@ -1581,7 +1581,7 @@ end,
 
                             StatsUI:NewRow("")
                             local duffelYPos = tonumber(transforms.pos.y)
-                            if duffelYPos < 0 and duffelYPos => -0.5 then
+                            if duffelYPos < 0 and duffelYPos >= -0.5 then
                                 duffelNumber = nil
                             elseif duffelYPos < -0.5 and duffelYPos >= -1 then
                                 duffelNumber = duffelYPos
