@@ -1581,24 +1581,15 @@ end,
 
                             StatsUI:NewRow("")
                             local duffelYPos = tonumber(transforms.pos.y)
-                            if duffelYPos < 0 and duffelYPos > -0.5 then 
-                                duffelNumber = nil  
-                                cursedTrigger = true
-                                valueDuringFall = true
-                            elseif duffelYPos <= -0.5 and duffelYPos >= -1 then 
-                                duffelNumber = duffelYPos 
-                                valueDuringFall = false
-                            elseif duffelYPos > 0  then 
-                                cursedTrigger = false
-                            end
-                            if duffelNumber ~= nil and cursedTrigger == false then
+                            if duffelYPos < 0 and duffelYPos => -0.5 then
+                                duffelNumber = nil
+                            elseif duffelYPos < -0.5 and duffelYPos >= -1 then
+                                duffelNumber = duffelYPos
+                            end 
+                            if duffelNumber ~= nil then
                                 StatsUI:NewRow(string.format("Duffel Bag: ON (".. duffelNumber.. ")"))
-                                StatsUI:NewRow(string.format("CursedTriggerHit: " .. tostring(cursedTrigger)))
-                                StatsUI:NewRow(string.format("LastFallCursed: " .. tostring(valueDuringFall)))
                             else
                                 StatsUI:NewRow(string.format("Duffel Bag: OFF"))
-                                StatsUI:NewRow(string.format("CursedTriggerHit: " .. tostring(cursedTrigger)))
-                                StatsUI:NewRow(string.format("LastFallCursed: " .. tostring(valueDuringFall)))
                             end
                     end
                 else
