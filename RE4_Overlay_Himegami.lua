@@ -267,10 +267,11 @@ local DisplayConfigOrder = {
     "Player HP Value",
     "Player Hate Rate",
     "Player Distance",
-    ----
-    "Armory Info",
-    ----
-    ----
+    
+    "Duffel Check",
+    "Display Position",
+    "Display Rotation",
+    
     "Enemy UI Title",
     "Enemy Name",
     "Enemy HP Value",
@@ -1545,8 +1546,7 @@ end,
         local sceneMgr = GetSceneManager()
         if sceneMgr and Config.StatsUI.Enabled then
             local scene = sdk.call_native_func(sceneMgr, TypeDefSceneManager, "get_CurrentScene")
-            if scene and Config.DisplayConfig["Armory Info"] then
-                -- TODO: Current Weapon
+            if scene and Config.DisplayConfig["Duffel Check"] then
                 StatsUI:NewRow("-- Position --")
                 local lastWeaponID = ""
                 local lastWeaponItemID = ""
@@ -1561,25 +1561,10 @@ end,
                 if playerBody then
                     local playerBody_Transform = playerBody:call("getComponent(System.Type)", sdk.typeof("via.Transform"))
                     if playerBody_Transform then
-                        --log.info("Found player transform")
-                          
                         transforms = {
                          pos = playerBody_Transform:call("get_Position"),
                          rot = playerBody_Transform:call("get_Rotation"),
                          }
-
-                            StatsUI:NewRow(string.format("Pos X:%f,Y:%f,Z:%f",transforms.pos.x,transforms.pos.y,transforms.pos.z))
-                            StatsUI:NewRow(string.format("Rot X:%f,Y:%f,Z:%f,W:%f",transforms.rot.x,transforms.rot.y,transforms.rot.z,transforms.rot.w))
-                            --StatsUI:NewRow(tostring(counter))
-                            
-                            --if (os.clock() - currentTime) < 1 then
-                               -- counter = counter + 1
-                           -- else
-                              --  counter = 0
-                             --   currentTime = os.clock()
-                        --    end
-
-                            StatsUI:NewRow("")
                             local duffelYPos = tonumber(transforms.pos.y)
                             if duffelYPos < 0 and duffelYPos >= -0.5 then
                                 duffelNumber = nil
@@ -1597,6 +1582,12 @@ end,
                 end
                 StatsUI:NewRow("")
             end
+	    	if scene and Config.DisplayConfig["Display Position"] then
+		    StatsUI:NewRow(string.format("POS: X: %f|Y: %f|Z: %f",transforms.pos.x,transforms.pos.y,transforms.pos.z))
+		end
+		if scene and Config.DisplayConfig["Display Rotation"] then
+                    StatsUI:NewRow(string.format("ROT: X: %f|Y: %f|Z: %f|W: %f",transforms.rot.x,transforms.rot.y,transforms.rot.z,transforms.rot.w))
+		end
         end
 
         if Config.TesterMode then
